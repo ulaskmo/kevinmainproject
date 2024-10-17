@@ -10,3 +10,16 @@ Content-Type: application/json
   "rentalPrice": 2.99,
   "availableCopies": 10
 }
+
+### Create Movie 2
+POST http://localhost:3000/api/movies
+Content-Type: application/json
+
+{
+  "title": "Interstellar",
+  "director": "Christopher Nolan",
+  "genre": "Sci-Fi",
+  "year": 2014,
+  "rentalPrice": 4.99,
+  "availableCopies": 7
+}
