@@ -1,8 +1,22 @@
-import express from 'express'; // Import express to create the server
-import dotenv from 'dotenv'; // For loading environment variables
+import express from 'express';
+import dotenv from 'dotenv';
+import { connectToDb } from './database';
+import movieRoutes from './routes/movieRoutes';
+import customerRoutes from './routes/customerRoutes';
 
-dotenv.config(); // Load environment variables
-const app = express(); // Initialize express app
-const PORT = process.env.PORT || 3000; // Get the port from environment variables or default to 3000
+dotenv.config();
 
-app.use(express.json()); // Middleware to parse JSON
+const app = express();
+
+app.use(express.json());
+
+app.use('/api/movies', movieRoutes);
+app.use('/api/customers', customerRoutes);
+
+const PORT = process.env.PORT || 3000;
+
+connectToDb(() => {
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+});

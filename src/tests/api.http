@@ -1,0 +1,12 @@
+### Create Movie 1
+POST http://localhost:3000/api/movies
+Content-Type: application/json
+
+{
+  "title": "The Matrix",
+  "director": "Lana Wachowski, Lilly Wachowski",
+  "genre": "Action",
+  "year": 1999,
+  "rentalPrice": 2.99,
+  "availableCopies": 10
+}
