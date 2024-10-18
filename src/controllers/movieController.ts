@@ -77,3 +77,31 @@ export const getMovieById = async (req: Request, res: Response): Promise<void> =
     }
 };
 
+// Delete the most recently added movie
+export const deleteLastMovie = async (req: Request, res: Response): Promise<void> => {
+    const db = getDb();
+
+    try {
+        // Find the most recent movie by sorting by _id in descending order
+        const lastMovie = await db.collection('movies').findOne({}, { sort: { _id: -1 } });
+
+        if (!lastMovie || !lastMovie._id) {
+            res.status(404).json({ error: 'No movies found to delete.' });
+            return;
+        }
+
+        // Validate the _id before using it
+        const movieId = lastMovie._id;
+        if (!ObjectId.isValid(movieId)) {
+            res.status(400).json({ error: 'Invalid movie ID format.' });
+            return;
+        }
+
+        // Delete the most recent movie
+        await db.collection('movies').deleteOne({ _id: new ObjectId(movieId) });
+
+        res.json({ message: 'Last movie deleted successfully', movie: lastMovie });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to delete the last movie.' });
+    }
+};
