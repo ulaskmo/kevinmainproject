@@ -47,7 +47,7 @@ GET http://localhost:3000/api/movies/6711809048b5cdb3e939ae38
 GET http://localhost:3000/api/movies/6348bfb5ccfbd60d4bf7e001
 
 ### deleting movie by using movieid
-DELETE http://localhost:3000/api/movies/6711809048b5cdb3e939ae38
+DELETE http://localhost:3000/api/movies/6711843c48b5cdb3e939ae3a
 
 ### cannot delet movie by using id beacuse id is not exist
 DELETE http://localhost:3000/api/movies/6348bfb5ccfbd60d4bf7e002

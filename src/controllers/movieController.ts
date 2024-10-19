@@ -3,11 +3,42 @@ import { ObjectId } from 'mongodb';
 import Movie from '../models/movie';
 import { getDb } from '../database';
 
-// Get all movies
-export const getMovies = async (req: Request, res: Response) => {
+export const getMovies = async (req: Request, res: Response): Promise<void> => {
     const db = getDb();
-    const movies = await db.collection('movies').find().toArray();
-    res.json(movies);
+
+    // Extract query parameters with proper type casting
+    const genre = req.query.genre as string;
+    const year = req.query.year as string;
+    const sortField = req.query.sortField as string;
+    const sortOrder = (req.query.sortOrder as string) || 'asc';
+    const fields = req.query.fields as string;
+
+    // Create the filter object based on genre and year
+    const filter: any = {};
+    if (genre) filter.genre = genre;
+    if (year) filter.year = Number(year);  // Convert year to a number
+
+    // Create the projection object for selected fields
+    const projection: any = {};
+    if (fields) {
+        fields.split(',').forEach((field: string) => {
+            projection[field] = 1;
+        });
+    }
+
+    // Determine the sort order (1 for ascending, -1 for descending)
+    const sort: any = {};
+    if (sortField) {
+        sort[sortField] = sortOrder === 'asc' ? 1 : -1;
+    }
+
+    try {
+        // Find movies based on filter, projection, and sort
+        const movies = await db.collection('movies').find(filter, { projection }).sort(sort).toArray();
+        res.json(movies);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to retrieve movies' });
+    }
 };
 
 // Create a new movie
