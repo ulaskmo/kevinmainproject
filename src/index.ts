@@ -11,7 +11,7 @@ const app = express();
 app.use(express.json());
 
 app.use('/api/movies', movieRoutes);
-app.use('/api/customers', customerRoutes);
+app.use('/api/customers', customerRoutes); //not available yet, will be future 
 
 const PORT = process.env.PORT || 3000;
 
