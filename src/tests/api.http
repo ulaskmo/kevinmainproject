@@ -7,7 +7,7 @@ POST http://localhost:3000/api/movies
 Content-Type: application/json
 
 {
-  "title": "The Matrix",
+  "title": "The Matrixxxxx",
   "director": "Lana Wachowski, Lilly Wachowski",
   "genre": "Action",
   "year": 1999,
